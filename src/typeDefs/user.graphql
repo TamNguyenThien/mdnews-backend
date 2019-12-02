@@ -1,0 +1,68 @@
+enum Gender {
+	UNKNOWN
+	MALE
+	FEMALE
+}
+type User {
+  _id: ID!
+  email: String
+  password: String
+  createdAt: Float
+  updatedAt: Float
+	isLocked: Boolean!
+	isVerified: Boolean!
+  isActive: Boolean!
+}
+input UpdateUserInput {
+	email: String!
+	password: String!
+}
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+input CreateUserInput {
+	email: String!
+	password: String!
+}
+
+type LoginReponse {
+  accessToken: String!
+}
+
+type LoginResponse {
+	accessToken: String!
+	refreshToken: String!
+}
+
+type Query {
+  hello: String!
+  login: LoginReponse!
+  users: [User!]
+	today: Date @date
+	user(_id: ID!): User
+}
+type RefreshTokenResponse {
+	accessToken: String!
+}
+type Mutation {
+	refreshToken(refreshToken: String!): RefreshTokenResponse
+  createUser(
+		input: CreateUserInput! @validate(schema: "createUserRegister")
+	): User
+  updateUser(
+		_id: ID!
+		input: UpdateUserInput!
+	): Boolean
+  deleteUser(_id: ID!): Boolean
+  login(
+		input: LoginUserInput! @validate(schema: "loginUserRegister")
+	): LoginResponse
+	changePassword(
+		_id: ID!
+		currentPassword: String!
+		password: String!
+	): Boolean
+	forgotPassword(email: String!): Boolean
+}

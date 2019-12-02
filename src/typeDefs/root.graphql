@@ -1,0 +1,7 @@
+directive @isAuthenticated on FIELD | FIELD_DEFINITION
+scalar JSON
+scalar JSONObject
+scalar Date
+directive @validate(schema: String, prototype: String) on ARGUMENT_DEFINITION
+#format
+directive @date(defaultFormat: String = "mmmm d, yyyy") on FIELD_DEFINITION
